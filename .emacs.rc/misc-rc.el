@@ -6,8 +6,8 @@
 (set-keyboard-coding-system 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
-;; 图形界面启动的 Emacs 经常没有这些目录
-(dolist (dir '("~/.local/bin" "~/.cargo/bin"))
+;; 图形界面启动的 Emacs 经常没有这些目录（后两个是 macOS 上 Homebrew 的位置）
+(dolist (dir '("~/.local/bin" "~/.cargo/bin" "/opt/homebrew/bin" "/usr/local/bin"))
   (let ((path (expand-file-name dir)))
     (when (file-directory-p path)
       (add-to-list 'exec-path path)
@@ -32,3 +32,14 @@
 
 (when (and (eq system-type 'gnu/linux) (rc/clipboard-copy-command))
   (setq interprogram-cut-function #'rc/clipboard-copy))
+
+;;; macOS
+(when (eq system-type 'darwin)
+  ;; Command 当 Meta（位置和 Linux 的 Alt 一样），Option 当 Super
+  (setq mac-command-modifier 'meta
+        mac-option-modifier 'super)
+  ;; 深色标题栏（Linux 上是 early-init.el 里的 GTK_THEME）
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+  (add-to-list 'default-frame-alist '(ns-appearance . dark))
+  ;; macOS 自带的 ls 不支持 --dired
+  (setq dired-use-ls-dired nil))

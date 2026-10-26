@@ -6,10 +6,17 @@
 ;; C-c e 打开 Emacs Lisp 参考手册
 (global-set-key (kbd "C-c e") (lambda () (interactive) (info "elisp")))
 
-;; 底部快捷键：两行，每行 3 个
+;; C-c C-y 只读打开快捷键文档，q 关闭
+(defun rc/open-keys ()
+  (interactive)
+  (view-file "~/.emacs.rc/keys.org"))
+
+(global-set-key (kbd "C-c C-y") 'rc/open-keys)
+
+;; 底部快捷键：每行 3 个
 (defconst rc/dashboard-keys
   '(("C-x g" . "Magit")    ("C-c e" . "Lisp手册") ("C-c d" . "回首页")
-    ("M-."   . "跳到定义") ("M-,"   . "跳回来") ("C-c t"   . "翻译")))
+    ("M-."   . "跳到定义")  ("C-c t"   . "翻译") ("C-c C-y" . "快捷键")))
 
 (defun rc/dashboard-insert-keys ()
   (insert "\n")
@@ -21,6 +28,8 @@
       (when (= (% (setq i (1+ i)) 3) 0)
         (push (string-join (nreverse line) "") lines)
         (setq line nil)))
+    (when line                          ; 最后一行不满 3 个
+      (push (string-join (nreverse line) "") lines))
     (dolist (l (nreverse lines))
       (dashboard-insert-center l "\n"))))
 
@@ -29,8 +38,7 @@
       dashboard-center-content t
       dashboard-vertically-center-content t
       dashboard-show-shortcuts t
-      dashboard-items '((recents  . 6)
-                        (bookmarks . 3))
+      dashboard-items '((recents . 6))
       dashboard-startupify-list '(dashboard-insert-banner
                                   dashboard-insert-newline
                                   dashboard-insert-init-info

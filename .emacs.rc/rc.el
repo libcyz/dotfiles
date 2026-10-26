@@ -3,10 +3,16 @@
 (require 'package)
 
 (setq package-check-signature nil)
+;; USTC 镜像优先；镜像连不上时自动用官方源（下载失败的源会被跳过）
 (setq package-archives
-      '(("gnu"    . "https://mirrors.ustc.edu.cn/elpa/gnu/")
-        ("nongnu" . "https://mirrors.ustc.edu.cn/elpa/nongnu/")
-        ("melpa"  . "https://mirrors.ustc.edu.cn/elpa/melpa/")))
+      '(("gnu"             . "https://mirrors.ustc.edu.cn/elpa/gnu/")
+        ("nongnu"          . "https://mirrors.ustc.edu.cn/elpa/nongnu/")
+        ("melpa"           . "https://mirrors.ustc.edu.cn/elpa/melpa/")
+        ("gnu-official"    . "https://elpa.gnu.org/packages/")
+        ("nongnu-official" . "https://elpa.nongnu.org/nongnu/")
+        ("melpa-official"  . "https://melpa.org/packages/"))
+      package-archive-priorities
+      '(("gnu" . 10) ("nongnu" . 10) ("melpa" . 10)))
 
 (defvar rc/package-contents-refreshed nil)
 
