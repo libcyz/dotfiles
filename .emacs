@@ -6,9 +6,9 @@
 (load "~/.emacs.rc/misc-rc.el")
 
 ;;; Appearance
-;; 打开时的窗口大小：宽 120 列，高 40 行
-(add-to-list 'default-frame-alist '(width . 120))
-(add-to-list 'default-frame-alist '(height . 40))
+;; 打开时的窗口大小：宽 160 列，高 55 行
+(add-to-list 'default-frame-alist '(width . 160))
+(add-to-list 'default-frame-alist '(height . 55))
 
 (tool-bar-mode 0)
 (menu-bar-mode 0)
@@ -16,13 +16,12 @@
 (column-number-mode 1)
 (show-paren-mode 1)
 
+(set-face-attribute 'default nil :height 120)
+
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode 1)
 
 (rc/require-theme 'gruber-darker)
-
-;; C-x C-+ / C-x C-- 每级缩放比例，默认 1.2 跳得太大
-(setq text-scale-mode-step 1.05)
 
 (rc/require 'smart-mode-line)
 (setq sml/no-confirm-load-theme t
