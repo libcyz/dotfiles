@@ -167,5 +167,14 @@
                      :render (gt-buffer-render)))
 (global-set-key (kbd "C-c t") 'gt-translate)
 
+;;; nov：用 C-x C-f 打开 .epub 就进入阅读模式
+(rc/require 'nov)
+(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+
+;; 每行最多 80 个字符，太宽了读着累
+(setq nov-text-width 80)
+;; 阅读时不要行号
+(add-hook 'nov-mode-hook (lambda () (display-line-numbers-mode -1)))
+
 (when (file-exists-p custom-file)
   (load custom-file nil t))
