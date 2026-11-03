@@ -2,6 +2,9 @@
 
 (setq custom-file "~/.emacs.d/custom.el")
 
+;; 后台把包编译成机器码时，包作者代码里的小毛病会弹警告窗口；不影响使用，不弹
+(setq native-comp-async-report-warnings-errors 'silent)
+
 (load "~/.emacs.rc/rc.el")
 (load "~/.emacs.rc/misc-rc.el")
 
