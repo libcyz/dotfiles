@@ -176,5 +176,9 @@
 ;; 阅读时不要行号
 (add-hook 'nov-mode-hook (lambda () (display-line-numbers-mode -1)))
 
+;;; vterm：Windows 上用不了
+(unless (eq system-type 'windows-nt)
+  (load "~/.emacs.rc/vterm-rc.el"))
+
 (when (file-exists-p custom-file)
   (load custom-file nil t))

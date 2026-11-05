@@ -6,6 +6,7 @@
 - =C-c C-y= 打开这份文档
 - =C-c d= 回到首页
 - =C-c e= 打开 Emacs Lisp 手册
+- =C-c v= 打开 vterm 终端
 - =C-x C-+= / =C-x C--= 放大 / 缩小字体，每级 5%
 - =Shift + 方向键= 在窗口之间切换（windmove）
 
