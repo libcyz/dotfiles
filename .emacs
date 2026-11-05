@@ -41,7 +41,7 @@
 (setq-default c-basic-offset 4)
 (setq c-ts-mode-indent-offset 4)
 
-;;; tree-sitter：语法高亮改用 *-ts-mode（grammar 装了才切换）
+;;; tree-sitter：语法高亮改用 *-ts-mode（Emacs 支持 tree-sitter 且 grammar 装了才切换）
 
 (setq treesit-font-lock-level 3)
 
@@ -50,7 +50,8 @@
                  (cpp . ((c++-mode . c++-ts-mode)))
                  (python . ((python-mode . python-ts-mode)))
                  (rust . ((rust-mode . rust-ts-mode)))))
-  (when (treesit-language-available-p (car remap))
+  (when (and (fboundp 'treesit-language-available-p)
+             (treesit-language-available-p (car remap)))
     (dolist (pair (cdr remap))
       (add-to-list 'major-mode-remap-alist pair))))
 
