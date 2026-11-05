@@ -13,9 +13,10 @@
 (add-to-list 'default-frame-alist '(width . 160))
 (add-to-list 'default-frame-alist '(height . 55))
 
-(tool-bar-mode 0)
+;; 没有图形支持的 Emacs（比如服务器上 --without-x 编译的）没有这两个函数
+(when (fboundp 'tool-bar-mode) (tool-bar-mode 0))
 (menu-bar-mode 0)
-(scroll-bar-mode 0)
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode 0))
 (column-number-mode 1)
 (show-paren-mode 1)
 
