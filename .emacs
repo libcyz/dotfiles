@@ -22,6 +22,10 @@
 
 (set-face-attribute 'default nil :height 120)
 
+;;用 y/n 回答，递归删除不再需要一个一个确认
+(setq dired-deletion-confirmer #'y-or-n-p)
+(setq dired-recursive-deletes 'always)
+
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode 1)
 
