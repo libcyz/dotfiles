@@ -34,9 +34,9 @@
 - =Tab= 确认
 
 * lsp-mode + lsp-ui
-打开 C/C++、Rust、Python 文件时自动连接语言服务器。
+打开 Rust、Python 文件时自动连接语言服务器；C/C++ 不自动启动，需要时 =M-x lsp=。
 - =M-.= 跳到定义，=M-,= 跳回来
-- =C-c l= 启动 LSP；启动后是 LSP 命令前缀，停一下 which-key 会列出所有命令
+- =C-c l= LSP 命令前缀（LSP 启动后才有），停一下 which-key 会列出所有命令
 - =C-c l r r= 重命名
 - =C-c l a a= 代码操作
 - ~C-c l = =~ 格式化

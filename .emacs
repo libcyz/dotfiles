@@ -44,6 +44,8 @@
               tab-width 4)
 (setq-default c-basic-offset 4)
 (setq c-ts-mode-indent-offset 4)
+;; C 的大括号风格：默认 gnu 会把单独一行的 { 再缩进一级，换成 bsd
+(setq c-ts-mode-indent-style 'bsd)
 
 ;;; tree-sitter：语法高亮改用 *-ts-mode（Emacs 支持 tree-sitter 且 grammar 装了才切换）
 
@@ -113,10 +115,6 @@
 (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
 (define-key company-active-map (kbd "TAB")   'company-complete-selection)
 
-;;; which-key：按 C-c l 后显示 LSP 命令
-(require 'which-key)
-(which-key-mode 1)
-
 ;;; Flycheck：诊断（错误/警告），lsp-mode 会自动对接
 (rc/require 'flycheck)
 (require 'flycheck)
@@ -124,7 +122,8 @@
 ;;; Rust 主模式（C / Python 用 Emacs 内置的）
 (rc/require 'rust-mode)
 
-;;; LSP：打开 C / Rust / Python 文件后自动启动对应语言服务器
+;;; LSP：打开 Rust / Python 文件后自动启动对应语言服务器
+;; C / C++ 不用：clangd 会在输入时改格式，写 C 不习惯
 (rc/require 'lsp-mode 'lsp-ui 'yasnippet)
 
 ;; 前缀必须在加载 lsp-mode 之前设置
@@ -138,26 +137,18 @@
       lsp-inlay-hint-enable t
       ;; 关掉已过时的 Python 服务器，优先用 pylsp
       lsp-disabled-clients '(pyls mspyls)
-      ;; C / C++：clangd
-      lsp-clients-clangd-args '("--header-insertion=never"
-                                "--clang-tidy"
-                                "--background-index")
       ;; Rust：rust-analyzer
       lsp-rust-analyzer-cargo-watch-command "clippy"
       lsp-rust-analyzer-display-chaining-hints t
       lsp-rust-analyzer-display-closure-return-type-hints t)
 
-(dolist (hook '(c-mode-hook c++-mode-hook c-ts-mode-hook c++-ts-mode-hook
-                rust-mode-hook rust-ts-mode-hook
+(dolist (hook '(rust-mode-hook rust-ts-mode-hook
                 python-mode-hook python-ts-mode-hook))
   (add-hook hook #'lsp-deferred))
 
 (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
 ;; 代码片段：rust-analyzer 的重构/补全需要 yasnippet
 (add-hook 'lsp-mode-hook #'yas-minor-mode)
-
-;; 未启动 LSP 时 C-c l 直接启动；启动后由 lsp-mode 的前缀接管
-(global-set-key (kbd "C-c l") 'lsp)
 
 ;;; magit：C-x g 打开状态窗口
 (rc/require 'magit)
