@@ -150,6 +150,24 @@
 ;; 代码片段：rust-analyzer 的重构/补全需要 yasnippet
 (add-hook 'lsp-mode-hook #'yas-minor-mode)
 
+;; 格式只交给一方管：打字时用编辑模式自己的缩进，LSP 不插手
+(setq lsp-enable-on-type-formatting nil   ; 输入 ; } 回车后不自动改格式
+      lsp-enable-indentation nil)         ; 缩进选区时不交给 LSP
+
+;;; apheleia：保存时用格式化工具整理整个文件，光标不乱跳
+;; Rust 用 rustfmt；Python 装了 ruff 才开；C 先不开（需要项目里有 .clang-format）
+(rc/require 'apheleia)
+(require 'apheleia)
+
+(setf (alist-get 'python-mode apheleia-mode-alist) 'ruff
+      (alist-get 'python-ts-mode apheleia-mode-alist) 'ruff)
+
+(add-hook 'rust-mode-hook #'apheleia-mode)
+(add-hook 'rust-ts-mode-hook #'apheleia-mode)
+(when (executable-find "ruff")
+  (add-hook 'python-mode-hook #'apheleia-mode)
+  (add-hook 'python-ts-mode-hook #'apheleia-mode))
+
 ;;; magit：C-x g 打开状态窗口
 (rc/require 'magit)
 (global-set-key (kbd "C-x g") 'magit-status)
@@ -172,6 +190,20 @@
 (setq nov-text-width 80)
 ;; 阅读时不要行号
 (add-hook 'nov-mode-hook (lambda () (display-line-numbers-mode -1)))
+
+;;; Markdown：在 Emacs 里直接读，隐藏 ** ` 链接地址等符号，标题放大，图片直接显示
+;; C-c C-x C-m 切换显示/隐藏符号，C-c C-x C-i 切换图片
+(rc/require 'markdown-mode)
+(setq-default markdown-hide-markup t)          ; 每个 buffer 各一份，要用 setq-default
+(setq markdown-header-scaling t
+      markdown-fontify-code-blocks-natively t)   ; 代码块按对应语言高亮
+(add-hook 'markdown-mode-hook #'markdown-display-inline-images)
+
+;; 表格按像素对齐（中英混排也齐），竖线和分隔行画成细线
+(rc/require 'valign)
+(setq valign-fancy-bar t)
+(add-hook 'markdown-mode-hook #'valign-mode)
+(add-hook 'org-mode-hook #'valign-mode)
 
 ;;; vterm：Windows 上用不了
 (unless (eq system-type 'windows-nt)
