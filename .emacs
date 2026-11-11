@@ -191,19 +191,18 @@
 ;; 阅读时不要行号
 (add-hook 'nov-mode-hook (lambda () (display-line-numbers-mode -1)))
 
-;;; Markdown：在 Emacs 里直接读，隐藏 ** ` 链接地址等符号，标题放大，图片直接显示
-;; C-c C-x C-m 切换显示/隐藏符号，C-c C-x C-i 切换图片
+;;; Markdown：打开就是原始文本，代码块按对应语言高亮
 (rc/require 'markdown-mode)
-(setq-default markdown-hide-markup t)          ; 每个 buffer 各一份，要用 setq-default
-(setq markdown-header-scaling t
-      markdown-fontify-code-blocks-natively t)   ; 代码块按对应语言高亮
-(add-hook 'markdown-mode-hook #'markdown-display-inline-images)
+(setq markdown-fontify-code-blocks-natively t)
 
-;; 表格按像素对齐（中英混排也齐），竖线和分隔行画成细线
+;; C-c m：表格按像素对齐（中英混排也齐），竖线和分隔行画成细线；再按一次关闭
+;; 默认不开，编辑时看到的就是原始文本
 (rc/require 'valign)
 (setq valign-fancy-bar t)
-(add-hook 'markdown-mode-hook #'valign-mode)
-(add-hook 'org-mode-hook #'valign-mode)
+(with-eval-after-load 'markdown-mode
+  (define-key markdown-mode-map (kbd "C-c m") 'valign-mode))
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "C-c m") 'valign-mode))
 
 ;;; vterm：Windows 上用不了
 (unless (eq system-type 'windows-nt)
