@@ -7,6 +7,8 @@
 - =C-c d= 回到首页
 - =C-c e= 打开 Emacs Lisp 手册
 - =C-c v= 打开 vterm 终端
+  - 终端里 =C-c= 直接发给终端（中断命令、退出 agent）；=C-x b=、=C-x o=、=M-x= 照常可用
+  - =C-x C-q= 进入复制模式：冻结屏幕，用 =C-v= / =M-v= 翻页、=C-s= 搜索、选中后 =M-w= 复制；再按 =C-x C-q= 或 =RET= 回到终端
 - =C-x C-+= / =C-x C--= 放大 / 缩小字体，每级 5%
 - =Shift + 方向键= 在窗口之间切换（windmove）
 
