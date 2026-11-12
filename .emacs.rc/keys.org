@@ -1,9 +1,9 @@
 #+title: 快捷键
 
-按 =C-c C-y= 打开这份文档，=q= 关闭。标题上按 =Tab= 折叠/展开。
+按 =C-c C-y= 或 =C-x C-y= 打开这份文档（vterm 里只能用 =C-x C-y=），=q= 关闭。标题上按 =Tab= 折叠/展开。
 
 * 自己加的
-- =C-c C-y= 打开这份文档
+- =C-c C-y= / =C-x C-y= 打开这份文档
 - =C-c d= 回到首页
 - =C-c e= 打开 Emacs Lisp 手册
 - =C-c v= 打开 vterm 终端

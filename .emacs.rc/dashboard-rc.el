@@ -6,12 +6,13 @@
 ;; C-c e 打开 Emacs Lisp 参考手册
 (global-set-key (kbd "C-c e") (lambda () (interactive) (info "elisp")))
 
-;; C-c C-y 只读打开快捷键文档，q 关闭
+;; C-c C-y 或 C-x C-y 只读打开快捷键文档，q 关闭（vterm 里 C-c 发给终端，用 C-x C-y）
 (defun rc/open-keys ()
   (interactive)
   (view-file "~/.emacs.rc/keys.org"))
 
 (global-set-key (kbd "C-c C-y") 'rc/open-keys)
+(global-set-key (kbd "C-x C-y") 'rc/open-keys)
 
 ;; 底部快捷键：每行 3 个
 (defconst rc/dashboard-keys
