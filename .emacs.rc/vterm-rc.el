@@ -1,6 +1,5 @@
-;;; vterm-rc.el --- 终端 -*- lexical-binding: t -*-
+;;; vterm-rc.el --- 终端 -*- 
 
-;; 第一次打开时自动编译模块，不询问 y/n（要在装包之前设置）
 ;; 编译需要 cmake、gcc 和 libvterm：sudo dnf install libvterm-devel
 (setq vterm-always-compile-module t)
 
