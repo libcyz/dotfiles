@@ -119,6 +119,10 @@
 (rc/require 'flycheck)
 (require 'flycheck)
 
+;; C / C++ 不用 LSP，直接让 flycheck 调 gcc 检查（少括号、分号、类型错误等），边写边标红
+(dolist (hook '(c-mode-hook c++-mode-hook c-ts-mode-hook c++-ts-mode-hook))
+  (add-hook hook #'flycheck-mode))
+
 ;;; Rust 主模式（C / Python 用 Emacs 内置的）
 (rc/require 'rust-mode)
 
