@@ -2,6 +2,12 @@
 
 ;; 编译需要 cmake、gcc 和 libvterm：sudo dnf install libvterm-devel
 (setq vterm-always-compile-module t)
+;; 关闭 libvterm 实验性重排（避免远程分屏缩放花屏）；离线优先绑定自编译依赖并写入 RPATH
+(setq vterm-module-cmake-args
+      (concat "-DCMAKE_C_FLAGS=-DVTermScreenEnableReflowNotExists"
+              (when (file-directory-p "/data2/cyz/emacs-deps/lib")
+                (concat " -DCMAKE_PREFIX_PATH=/data2/cyz/emacs-deps"
+                        " -DCMAKE_MODULE_LINKER_FLAGS=-Wl,-rpath,/data2/cyz/emacs-deps/lib"))))
 
 ;; 终端里能往回翻的行数（默认 1000，最大 100000）
 (setq vterm-max-scrollback 10000)
