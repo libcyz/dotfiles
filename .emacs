@@ -22,6 +22,20 @@
 
 (set-face-attribute 'default nil :height 120)
 
+;; C-x C-+ / C-x C-- 改全局字体，换 buffer 后仍然有效
+;; 内置 global-text-scale-adjust 连按不认 C-+，包一层把 Ctrl 连按补上
+(defun rc/global-text-scale-adjust (increment)
+  "全局放大/缩小字体。按一次后可继续按 + / - / 0，或按住 Ctrl 连按。"
+  (interactive "p")
+  (global-text-scale-adjust increment)
+  (let ((map (make-sparse-keymap)))
+    (dolist (mods '(() (control) (control meta)))
+      (dolist (key '(?+ ?= ?- ?0))
+        (define-key map (vector (append mods (list key)))
+          #'rc/global-text-scale-adjust)))
+    (set-transient-map map nil nil "Use %k for further adjustment")))
+(global-set-key [remap text-scale-adjust] #'rc/global-text-scale-adjust)
+
 ;;用 y/n 回答，递归删除不再需要一个一个确认
 (setq dired-deletion-confirmer #'y-or-n-p)
 (setq dired-recursive-deletes 'always)
